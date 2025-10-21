@@ -38,10 +38,10 @@ const calculate = () => {
             lastValue = firstValue - secondValue;
             break;
 
-        case "×":
+        case "×"||"*":
             lastValue = firstValue * secondValue;
             break;
-        case "÷":
+        case "÷"||"/":
             lastValue = firstValue / secondValue;
             break;
         default:
@@ -91,6 +91,26 @@ const setOperator = (newOpe) => {
     operator = newOpe;
 }
 
+document.onkeyup = function (e) {
+    console.log(e.key);
+    
+    const textValue = e.key;
+        if (/^[0-9]+$/.test(textValue)) {
+            addDigit(textValue);
+        } else if (["*", "-", "/", "+"].includes(textValue)) {
+            setOperator(textValue);
+        } else if (textValue == "Enter") {
+            calculate()
+        } else if (textValue == "Delete") {
+            clearDisplay();
+        } else if (textValue == "%") {
+            setPercentage();
+        } else if (textValue == "," || textValue == ".") {
+            addDigit(textValue);
+        }
+    
+}
+
 btns.forEach((value) => {
     value.addEventListener("click", () => {
         const textValue = value.innerText;
@@ -104,7 +124,7 @@ btns.forEach((value) => {
             clearDisplay();
         } else if (textValue == "%") {
             setPercentage();
-        } else if(textValue==","){
+        } else if (textValue == ",") {
             addDigit(textValue);
         }
     })
